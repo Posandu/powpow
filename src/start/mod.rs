@@ -3,7 +3,8 @@ use crate::tokenizer::tokenize;
 use std::time::Instant;
 
 pub fn start(code: &String) {
-    let tokens = tokenize(code);
+    let all = String::new() + code + "# EOL \n\n\n";
+    let tokens = tokenize(&all);
 
     let start_time = Instant::now();
 

@@ -71,6 +71,9 @@ pub fn run(tokens: &Vec<TokType>) {
             // Internal function call
             //
             TokType::InternalFn(name) => match name.as_str() {
+                //
+                // Delete memory
+                //
                 "d" => {
                     let address = &tokens[pos + 1];
 
@@ -82,6 +85,9 @@ pub fn run(tokens: &Vec<TokType>) {
                         _ => panic!("Invalid address"),
                     }
                 }
+                //
+                // Add two numbers
+                //
                 "a" => {
                     let first = match &tokens[pos + 1] {
                         TokType::MemAddress(addr) => memory.get(addr).unwrap(),
@@ -109,6 +115,73 @@ pub fn run(tokens: &Vec<TokType>) {
                         _ => panic!("Invalid types"),
                     }
                 }
+                //
+                // Subtract two numbers
+                //
+                "s" => {
+                    let first = match &tokens[pos + 1] {
+                        TokType::MemAddress(addr) => memory.get(addr).unwrap(),
+                        _ => panic!("Invalid address"),
+                    };
+
+                    let second = match &tokens[pos + 2] {
+                        TokType::MemAddress(addr) => memory.get(addr).unwrap(),
+                        _ => panic!("Invalid address"),
+                    };
+
+                    let to = match &tokens[pos + 2] {
+                        TokType::MemAddress(addr) => memory.get(addr).unwrap(),
+                        _ => panic!("Invalid address"),
+                    };
+
+                    match (first, second, to) {
+                        (
+                            TokValue::Integer(first),
+                            TokValue::Integer(second),
+                            TokValue::Integer(to),
+                        ) => {
+                            if first < second {
+                                memory.insert(*to, TokValue::Integer(0));
+
+                                return;
+                            }
+
+                            memory.insert(*to, TokValue::Integer(first - second));
+                        }
+                        _ => panic!("Invalid types"),
+                    }
+                }
+                //
+                // Multiply two numbers
+                //
+                "m" => {
+                    let first = match &tokens[pos + 1] {
+                        TokType::MemAddress(addr) => memory.get(addr).unwrap(),
+                        _ => panic!("Invalid address"),
+                    };
+
+                    let second = match &tokens[pos + 2] {
+                        TokType::MemAddress(addr) => memory.get(addr).unwrap(),
+                        _ => panic!("Invalid address"),
+                    };
+
+                    let to = match &tokens[pos + 2] {
+                        TokType::MemAddress(addr) => memory.get(addr).unwrap(),
+                        _ => panic!("Invalid address"),
+                    };
+
+                    match (first, second, to) {
+                        (
+                            TokValue::Integer(first),
+                            TokValue::Integer(second),
+                            TokValue::Integer(to),
+                        ) => {
+                            memory.insert(*to, TokValue::Integer(first * second));
+                        }
+                        _ => panic!("Invalid types"),
+                    }
+                }
+
                 _ => panic!("Invalid internal function call"),
             },
             //

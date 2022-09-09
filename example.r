@@ -1,21 +1,18 @@
+# 
+# Basic stuff
 #
-# Print hello world and do a simple calculation
-#
+.0 "Hello World" # Initialize memory address 0 with the string "Hello World"
+$print .0 # Execute the print function with the argument .0
+_d .0 # Delete memory address 0
 
-.0 "hello world" # Set memory location 0 to string "hello world"
+# Add two numbers
+.0 1 # Initialize memory address 0 with the number 1
+.1 2 # Initialize memory address 1 with the number 2
+.2 0 # Memory address 2 is used as a temporary variable to store the result
+_a .0 .1 .2 # Execute the add function with the arguments .0, .1 and store the result in .2
+$print .2 # Print the result
 
-$print .0 # Print memory location 0
+_d .0 # Delete memory address 0
+_d .1 # Delete memory address 1
+_d .2 # Delete memory address 2
 
-_d .0 # Delete memory location 0
-
-.0 1 # Set memory location 0 to integer 1
-.1 2 # Set memory location 1 to integer 2
-.2 0 # Set memory location 2 to integer 0 (To store the result of the calculation)
-
-_a .0 .1 .2 # Add memory location 0 and 1 and store the result in memory location 2
-
-$print .2 # Print memory location 2
-
-_d .0 # Delete memory location 0
-_d .1 # Delete memory location 1
-_d .2 # Delete memory location 2
